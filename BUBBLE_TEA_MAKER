@@ -1,0 +1,78 @@
+#This program allows users to customize their own cold beverage by choosing
+#their preferred type of milk or fruit, type of tea, toppings, size,
+#temperature and number of ice cubes.
+print("Welcome to the DIY Tea & Juice Maker!")
+base = int(input("What kind of base do you want? \
+Please enter 1 for milk or 2 for fruit: "))
+
+#If they choose milk as base ask them if they are lactose intolerant?
+if base == 1:
+    lactose_intolerance = (input("Do you have lactose intolerance? \
+y for yes, n for no: "))
+    if lactose_intolerance == "y":
+        kind_of_base = input("Do you want soy milk or oat milk? \
+Please type in your choice [soy/oat]: ")
+#If they are not lactose intolerant give them regular milk.   
+    elif lactose_intolerance == "n":
+        kind_of_base = "regular"
+elif base == 2:
+    kind_of_base = input("Which fruit do you want? \
+Please type in your choice [mango/strawberry]: ")
+
+#We need this variable in the final message since in the final message the
+#word ”milk”  or ”juice” will be added depending on the base and this variable
+#is going to use the correct word in the appropriate case.
+if base == 1:
+    a = "milk"
+elif base == 2:
+    a = "juice"
+
+tea = input("From the following tea type:\
+\n- No Tea\n- Black Tea\n- Green Tea\n- Matcha\nPlease choose a tea type: ")
+#The user cannot choose Matcha if they choose a fruit base,
+#if he does the program should print out “Invalid choice!” and terminate.
+if base == 2 and tea == "Matcha":
+    print("Invalid choice! End of the program")
+else:
+    topping = input("From the following toppings:\
+\n- No Topping\n- Bobas\n- Coconut Jelly\
+\nPlease enter your choice for toppings: ")
+    
+    size = input("Please enter your desired size of cup \
+(Please enter s for small, m for medium, or l for large): ")
+#Convert the volume of the cup into mass of the drink in gram
+#by assuming 1 ml = 1 g of drink.
+    if size == "s":
+        mass = 355 
+    elif size == "m":
+        mass = 473
+    elif size == "l":
+        mass = 621
+    
+    temp = float(input("Please enter your desired temperature of your \
+beverage (between 1 and 4 degrees): "))
+#If the temperature chose by the customer is higher than 4 and less than or
+#equal to 10 degree, the program will set the temperature to 4 degree Celsius.
+    if (4 < temp <= 10): 
+        temp = 4
+
+#If the desired temperature of the bubble tea is not between
+#1 degree and 10 degree Celsius,the answer is invalid and it will terminate.
+    if (temp < 1) or (temp > 10):
+        print("Invalid choice! End of the program")
+#If the temp is between 1 and 4, the program will compute the amount of ice
+#needed to convert the drink from an ambient temperature of 25 degrees Celsius
+#to the desired temperature of the drink once the ice melts.
+    elif (1 <= temp <= 4):
+        part1 = (mass * 4.184 * (25 - temp))
+        part2 = (334 + (4.184 * (temp - 0)))
+        amount_of_ice = part1 / part2
+#Compute the number of 5g ice cubes needed to convert
+#the drink to the desired temperature       
+        number_of_ice_cubes = int(amount_of_ice / 5)
+#Finally the program will display the final drink size with all the chosen
+#ingredients, desired temperature and the number of ice cubes in the drink.
+        print("Your drink is a", kind_of_base, a, "and", tea, "with", topping
+              +".\nThe temperature of your beverage will be", float(temp),
+              "Celcius degree after all", number_of_ice_cubes,
+              "ice cubes melted.\nHave a nice day!")
